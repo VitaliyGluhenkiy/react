@@ -10,7 +10,6 @@ const Friends = (props) => {
         <div>
             <div>
                 {friendsPage}
-                1
             </div>
         </div>
     )
