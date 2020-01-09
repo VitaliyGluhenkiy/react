@@ -1,0 +1,14 @@
+.image img {
+    width: 40px;
+    height: 40px;
+    border-radius: 30px;
+}
+
+.block {
+    display: inline-block;
+    margin: 5px;
+}
+.block .name {
+    text-align: center;
+    color: #fff;
+}

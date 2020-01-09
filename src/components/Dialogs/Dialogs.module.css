@@ -1,0 +1,18 @@
+.dialogsFile {
+    display: grid;
+    grid-template-areas: 'd m';
+    grid-template-columns: 6fr 6fr;
+}
+
+.dialogsItems{
+    grid-area: d;
+}
+
+.messagesItems {
+    grid-area: m;
+
+}
+
+.messagesItems .active {
+    color: gold;
+}

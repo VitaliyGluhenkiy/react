@@ -1,16 +1,25 @@
 import React from 'react'
-import classes from './Friends.module.css'
-import FriendsItem from "./FriendsItem/FriendsItem";
 
-const Friends = (props) => {
-        let friendsPage = props.friendsData.map( f => <FriendsItem name={f.name} id={f.id} image={f.image} />)
+import Friends from "./Friends";
+import {connect} from "react-redux";
+
+const FriendsContainer = (props) => {
+
     return (
         <div>
-            <div>
-                {friendsPage}
-            </div>
+            <Friends friendList={props.friendList}/>
         </div>
     )
 }
 
-export default Friends;
+let mapStateToProps = (state) => {
+    return {
+        friendList: state.friendsPage.friendList
+    }
+}
+
+let mapDispatchToProps = () => {
+
+}
+
+export default connect(mapStateToProps, mapDispatchToProps) (FriendsContainer);

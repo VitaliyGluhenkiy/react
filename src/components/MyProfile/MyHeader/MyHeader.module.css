@@ -1,0 +1,12 @@
+.logo img {
+    width: 100px;
+    height: 100px;
+    margin: 10px;
+}
+
+.myname {
+    display: flex;
+}
+.name {
+    margin: 10px;
+}

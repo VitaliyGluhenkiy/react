@@ -1,0 +1,13 @@
+.navigation{
+    grid-area: n;
+    background-color: palevioletred;
+    color: white;
+}
+
+.navigation a.active {
+    color: greenyellow;
+}
+
+.navigation a {
+    text-decoration: none;
+}
