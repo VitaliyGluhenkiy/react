@@ -6,6 +6,9 @@ import {
 } from "../../redux/searchUserReducer";
 import preloaderTwo from '../../assets/image/images.jpg'
 import Preloader from "../../common/Preloader/Preloader";
+import {
+    getCurrentPage, getFollowingInProgress, getIsFetching, getIsLoader, getPageSize, getSearchUsers, getTotalItemsCount,
+} from "../../redux/serchUserSelectors";
 
 class SearchUserContainer extends React.Component {
 
@@ -26,7 +29,7 @@ class SearchUserContainer extends React.Component {
             {this.props.isFetching ? null : <img src={preloaderTwo} alt=""/>}
             {this.props.isLoader ? <Preloader/> : null}
             <SearchUser
-                totalUsersCount={this.props.totalUsersCount}
+                totalItemsCount={this.props.totalItemsCount}
                 pageSize={this.props.pageSize}
                 currentPage={this.props.currentPage}
                 onPageChanged={this.onPageChanged}
@@ -47,13 +50,13 @@ class SearchUserContainer extends React.Component {
 
 let mapStateToProps = (state) => {
     return {
-        searchPage: state.searchData.users,
-        pageSize: state.searchData.pageSize,
-        totalUsersCount: state.searchData.totalUsersCount,
-        currentPage: state.searchData.currentPage,
-        isLoader: state.searchData.isLoader,
-        isFetching: state.searchData.isFetching,
-        followingInProgress: state.searchData.followingInProgress
+        searchPage: getSearchUsers(state),
+        pageSize: getPageSize(state),
+        totalItemsCount: getTotalItemsCount(state),
+        currentPage: getCurrentPage(state),
+        isLoader: getIsLoader(state),
+        isFetching: getIsFetching(state),
+        followingInProgress: getFollowingInProgress(state)
     }
 }
 

@@ -1,5 +1,4 @@
 const ADD_POST = 'ADD-POST'
-const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT'
 
 
 let initialState = {
@@ -17,23 +16,17 @@ let initialState = {
             {id: 4 , message: 'Hello wo'},
             {id: 5 , message: 'Hello w'}
         ],
-        newPostText: 'hello man',
+
 }
 
 const dialogsReducer = (state = initialState, action) => {
 
     switch(action.type) {
         case ADD_POST:
-            let newPost = state.newPostText
+            let newPost = action.newMessageBody
             return {
                 ...state,
-                newPostText: '',
                 message: [...state.message , {id: 8, message: newPost}]
-            }
-        case UPDATE_NEW_POST_TEXT:
-            return {
-                ...state,
-                newPostText: action.newText
             }
         default :
             return state
@@ -41,17 +34,12 @@ const dialogsReducer = (state = initialState, action) => {
 }
 
 
-export const addNewMessageAC = () => {
+export const addNewMessageAC = (newMessageBody) => {
     return {
-        type: ADD_POST
+        type: ADD_POST ,  newMessageBody
     }
 }
 
-export const onPostChangeAC = (newText) => {
-    return {
-        type:UPDATE_NEW_POST_TEXT, newText: newText
-    }
-}
 
 
 export default dialogsReducer;

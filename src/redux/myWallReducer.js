@@ -3,6 +3,7 @@ import {profileAPI} from "../api/api";
 const ADD_POST_WALL = 'ADD-POST-WALL'
 const UPDATE_WALL_TEXT = 'UPDATE-WALL-TEXT'
 const SET_USER_PROFILE = 'SET_USER_PROFILE'
+const SET_STATUS = 'SET_STATUS'
 
 
 let initialState = {
@@ -13,22 +14,18 @@ let initialState = {
             { id: 4 , name: 'Vetal', message: 'Privet kak dela'},
         ],
         newPostWall: 'aasgvvccc',
-        profile: null
+        profile: null,
+        status: ''
 }
 
 const myWallReducer = (state = initialState , action) => {
     switch(action.type) {
         case ADD_POST_WALL: {
-            let newPostWall = {
-                id: 5,
-                name: 'Sanya',
-                message: state.newPostWall
-            }
-            let stateCopy = {...state};
-            stateCopy.posts = [...state.posts];
-            stateCopy.posts.push(newPostWall)
-            stateCopy.newPostWall=''
-            return stateCopy
+           let body = action.message
+            return {
+                ...state,
+                posts: [...state.posts , {id: 5 , message: body}]
+        }
         }
         case UPDATE_WALL_TEXT: {
             let stateCopy = {...state}
@@ -41,6 +38,12 @@ const myWallReducer = (state = initialState , action) => {
                 ...state, profile: action.profile
             }
         }
+        case SET_STATUS: {
+            return {
+                ...state,
+                status: action.status
+            }
+        }
         default:
             return state
 
@@ -48,9 +51,11 @@ const myWallReducer = (state = initialState , action) => {
 
 }
 
-export const addPostWallAC = () => {
+export const setStatus = (status) => ({type: SET_STATUS, status})
+
+export const addPostWallAC = (message) => {
     return {
-        type: ADD_POST_WALL
+        type: ADD_POST_WALL , message
     }
 }
 
@@ -64,6 +69,20 @@ export const getProfileSuccess = (userId) => (dispatch) => {
             })
     }
 
+export const getStatus = (userId) => (dispatch) => {
+        profileAPI.getStatus(userId)
+            .then(response => {
+                dispatch(setStatus(response.data))
+            })
+}
 
+export const updateStatus = (status) => (dispatch) => {
+        profileAPI.updateStatus(status)
+            .then(response => {
+                if(response.data.resultCode === 0){
+                    dispatch(setStatus(status))
+                }
+            })
+}
 
 export default myWallReducer;

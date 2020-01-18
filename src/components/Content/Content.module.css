@@ -1,0 +1,11 @@
+.buttons {
+    display: flex;
+}
+
+.buttons .buttonCancel {
+    background-color: darkred;
+}
+
+.buttons .buttonAccept {
+    background-color: green;
+}

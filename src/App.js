@@ -3,19 +3,20 @@ import './App.css';
 import Navigation from "./components/Navigation/Navigation";
 import Footer from "./components/Footer/Footer";
 import Content from "./components/Content/Content";
-import Header from "./components/Header/Header";
-import Dialogs from "./components/Dialogs/Dialogs";
 import {Route} from "react-router-dom";
-import MyProfile from "./components/MyProfile/MyProfile";
-import Friends from "./components/Friends/Friends";
-import DialogsContainer from "./components/Dialogs/DialogsContainer";
-import SearchUser from "./components/SearchUsers/SearchUser";
 import SearchUserContainer from "./components/SearchUsers/SearchUserContainer";
 import MyProfileContainer from "./components/MyProfile/MyProfileContainer";
 import HeaderComponent from "./components/Header/HeaderContainer";
 import FriendsContainer from "./components/Friends/FriendsContainer";
+import Login from "./components/Login/Login";
+// import ContentContainer from "./components/Content/ContentContainer";
+import ToDo from "./components/toDo/toDo";
+import Preloader from "./common/Preloader/Preloader";
+// import DialogsContainer from "./components/Dialogs/DialogsContainer";
 
 
+const DialogsContainer = React.lazy(() => import('./components/Dialogs/DialogsContainer'));
+const ContentContainer = React.lazy(() => import('./components/Content/ContentContainer'));
 
 const App = (props) => {
     return (
@@ -23,16 +24,24 @@ const App = (props) => {
         <HeaderComponent store={props.store}/>
         <Navigation/>
         <div className='app-wrapper-content'>
-            <Route path='/content' render={() => <Content/>}/>
-            <Route path='/dialogs' render={() => <DialogsContainer
-                store={props.store}
-            />}/>
+            <Route path='/content' render={() =>
+                <React.Suspense fallback={<Preloader/>}>
+                    <ContentContainer/>
+                </React.Suspense>
+            }/>
+            <Route path='/dialogs' render={() =>
+                <React.Suspense fallback={<Preloader/>}>
+                    <DialogsContainer/>
+                </React.Suspense>
+            }/>
             <Route path='/myprofile/:userId?' render={() => <MyProfileContainer
             />}/>
             <Route path='/search' render={() => <SearchUserContainer
                 store={props.store}
             />}/>
             <Route path='/friends' render={() => <FriendsContainer/>}/>
+            <Route path='/login' render={() => <Login/>}/>
+            <Route path='/toDo' render={ () => <ToDo/>}/>
         </div>
 
         <Footer/>

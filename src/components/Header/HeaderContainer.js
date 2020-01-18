@@ -2,7 +2,7 @@ import React from 'react'
 import * as axios from "axios";
 import Header from "./Header";
 import {connect} from 'react-redux'
-import {getAuthUserData} from "../../redux/authReducer";
+import {getAuthUserData, logout} from "../../redux/authReducer";
 
 class HeaderComponent extends React.Component{
 
@@ -13,7 +13,7 @@ class HeaderComponent extends React.Component{
 
     render(){
         return (
-            <Header {...this.props}/>
+            <Header {...this.props} />
         )
     }
 }
@@ -22,4 +22,4 @@ let mapStateToProps = (state) => ({
     isAuth: state.authPage.isAuth,
     login: state.authPage.login
 })
-export default connect(mapStateToProps,{getAuthUserData})(HeaderComponent);
+export default connect(mapStateToProps,{getAuthUserData, logout})(HeaderComponent);

@@ -13,7 +13,7 @@ const Navigation = (props) => {
                 <NavLink to="/myprofile" activeClassName={classes.active}>MyProfile</NavLink>
             </div>
             <div>
-                <NavLink to="/message" activeClassName={classes.active}>Message</NavLink>
+                <NavLink to="/content" activeClassName={classes.active}>Content</NavLink>
             </div>
             <div>
                 <NavLink to="/info" activeClassName={classes.active}>Info</NavLink>
@@ -29,6 +29,12 @@ const Navigation = (props) => {
             </div>
             <div className='search'>
                 <NavLink to='/search' activeClassName={classes.active}>Search</NavLink>
+            </div>
+            <div className='login'>
+                <NavLink to='/login' activeClassName={classes.active}>Login</NavLink>
+            </div>
+            <div>
+                <NavLink to="/toDo" activeClassName={classes.active}>ToDo</NavLink>
             </div>
         </div>
     )

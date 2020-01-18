@@ -1,18 +1,60 @@
 import React from 'react'
 import classes from './Friends.module.css'
 import FriendsItem from "./FriendsItem/FriendsItem";
+import FriendsFormRedux from "./FriendsItem/FriendsForm";
 
-const Friends = (props) => {
-    let friendsPage = props.friendList.map( f => <div>
-       <div>{f.name}</div>  <div>{f.age}</div> {f.sity}
-    </div>)
-    return (
-        <div>
+class Friends extends React.Component {
+
+
+
+    state = {
+        editStatus: false
+    }
+
+    activeteEditStatus = () =>{
+        this.setState({
+        editStatus: true
+    })
+    }
+
+    deactivateEditStatus = () => {
+        this.setState({
+            editStatus: false
+        })
+    }
+
+
+
+
+    render(){
+
+        let friendsPage = this.props.friendList.map( f => <div>
+            <div>{f.name}</div>  <div>{f.age}</div> {f.sity}
+        </div>)
+
+
+        const addFriendsMessage = (items) => {
+            this.props.sendFriendsMessage(items.newFriendsMessage)
+        }
+
+        return (
             <div>
-                {friendsPage}
+                <div>
+                    {friendsPage}
+                </div>
+                {!this.state.editStatus &&
+                <div>
+                    <p onDoubleClick={this.activeteEditStatus}>{this.props.title}</p>
+                </div>}
+                {this.state.editStatus &&
+                <div>
+                    <input autoFocus={true} onBlur={this.deactivateEditStatus} value={this.props.title}/>
+                </div>}
+                <FriendsFormRedux onSubmit={addFriendsMessage}/>
             </div>
-        </div>
-    )
+        )
+    }
+
 }
 
 export default Friends;

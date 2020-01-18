@@ -1,24 +1,13 @@
 import React from 'react'
 import classes from './Dialogs.module.css'
-import {NavLink} from "react-router-dom";
+import {NavLink, Redirect} from "react-router-dom";
 import MessageItems from "./MessageItem/MessageItem";
 import DialogItem from "./DialogItem/DialogItem";
 import {addNewMessageAC, onPostChangeAC} from "../../redux/dialogsReducer";
-
+import {withAuthRedirect} from "../../hoc/withAuthRedirect";
+import DialogsReduxLogin from "./DialogsForm";
 
 const Dialogs = (props) => {
-
-    let buttonClick = React.createRef();
-
-    let newMessage = () => {
-        props.addNewMessage();
-
-    }
-
-    let onPostChange = () => {
-        let newText = buttonClick.current.value;
-        props.messageChange(newText);
-    }
 
     let dialogsPage = props.dialogsPage
         .map( dialogs => <DialogItem name={dialogs.name} id={dialogs.id} />)
@@ -26,6 +15,11 @@ const Dialogs = (props) => {
     let messageNew = props.messageNew.map( message => <MessageItems id={message.id} message={message.message}/>)
 
 
+    const addNewMessage = (values) => {
+        // alert(values.newMessageBody)
+        // props.newMessage(values.newMessage)
+        props.sendMessage(values.newMessageBody);
+    }
 
 
     return (
@@ -37,11 +31,12 @@ const Dialogs = (props) => {
                 {messageNew}
             </div>
             <div>
-                <textarea onChange={onPostChange} ref={buttonClick} value={props.newPostText} />
-                <button onClick={newMessage}>Отправить</button>
+               <DialogsReduxLogin onSubmit={addNewMessage}/>
             </div>
         </div>
     )
 }
+
+
 
 export default Dialogs;

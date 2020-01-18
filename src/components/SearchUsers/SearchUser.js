@@ -1,13 +1,13 @@
-import React from 'react'
+import React , {useState} from 'react'
 import classes from './searchUser.module.css'
 import userPhoto from '../../assets/image/image.png'
 import {NavLink} from "react-router-dom";
-import * as axios from "axios";
-import {followAPI, usersAPI} from "../../api/api";
 
-let SearchUser = (props) => {
+let SearchUser = ({totalItemsCount,pageSize, unfollow, follow,
+                  currentPage, onPageChanged ,searchPage ,
+                  followingInProgress , portionSize = 10}) => {
 
-    let pagesCount = Math.ceil(props.totalUsersCount / props.pageSize)
+    let pagesCount = Math.ceil(totalItemsCount / pageSize)
 
     let pages = []
 
@@ -15,20 +15,40 @@ let SearchUser = (props) => {
         pages.push(i)
     }
 
+
+    let portionCount = Math.ceil(pagesCount / portionSize)
+
+    let [portionNumber, setPortionNumber] = useState(1)
+
+    let leftPortionPageNumber = (portionNumber - 1) * portionSize + 1
+
+    let rightPortionPageNumber = portionNumber * portionSize
+
     return (
         <div>
             <div>
-                {pages.map(p => {
-                    return <span
-                        className={props.currentPage === p && classes.selectedPage}
+                {portionNumber > 1 &&
+                <button onClick={ () => { setPortionNumber(portionNumber -1)}}>
+                    PREV
+                </button>}
+
+                {pages
+                    .filter(p => p >=leftPortionPageNumber && p<=rightPortionPageNumber)
+                    .map(p => {
+                    return <span className={currentPage === p && classes.selectedPage}
                         onClick={(e) => {
-                            props.onPageChanged(p)
+                            onPageChanged(p)
                         }}
-                    >{p} </span>
+                    >{p}</span>
                 })}
+
+                {portionCount > portionNumber &&
+                <button onClick={ () => { setPortionNumber(portionNumber +1)}}>
+                    next
+                </button>}
             </div>
             {
-                props.searchPage.map(u => <div>
+                searchPage.map(u => <div>
                     <div className={classes.img}>
                         <NavLink to={'/myprofile/' + u.id}>
                             <img src={u.photos.small != null ? u.photos.small : userPhoto} alt=""/>
@@ -36,13 +56,13 @@ let SearchUser = (props) => {
                     </div>
                     <div>
                         {u.followed
-                            ? <button disabled={props.followingInProgress
+                            ? <button disabled={followingInProgress
                                 .some(id => id === u.id)} onClick={() => {
-                                props.unfollow(u.id)
+                                unfollow(u.id)
                             }}>Unfollow</button>
-                            : <button disabled={props.followingInProgress
+                            : <button disabled={followingInProgress
                                 .some(id => id === u.id)} onClick={() => {
-                                props.follow(u.id)
+                                follow(u.id)
                             }}>Follow</button>
                         }
 

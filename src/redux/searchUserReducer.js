@@ -4,7 +4,7 @@ const FOLLOW = 'FOLLOW'
 const UNFOLLOW = 'UN_FOLLOW'
 const SET_USERS = 'SET_USERS'
 const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE'
-const SET_TOTAL_USERS_COUNT = 'SET_TOTAL_USERS_COUNT'
+const SET_TOTAL_ITEMS_COUNT = 'SET_TOTAL_USERS_COUNT'
 const TOGGLE_IS_LOADER = 'TOGGLE_IS_LOADER'
 const TOGGLE_IS_FETCHING = 'TOGGLE_IS_FETCHING'
 const TOGGLE_IS_FOLLOWING_PROGRESS = 'TOGGLE_IS_FOLLOWING_PROGRESS'
@@ -13,7 +13,7 @@ let initialState = {
     users: [ ],
     pageSize: 5,
     totalUsersCount: 0,
-    currentPage: 1 ,
+    currentPage: 1,
     isLoader: true ,
     isFetching: false,
     followingInProgress: []
@@ -55,9 +55,9 @@ const searchUserReducer = (state = initialState , action) => {
             return {
                 ...state, currentPage: action.currentPage
             }
-        case SET_TOTAL_USERS_COUNT:
+        case SET_TOTAL_ITEMS_COUNT:
             return {
-                ...state, totalUsersCount: action.totalCount
+                ...state, totalItemsCount: action.totalCount
             }
         case TOGGLE_IS_LOADER:
             return {
@@ -86,21 +86,23 @@ export const followSuccess = (userID) => ({type: FOLLOW , userID})
 export const unfollowSuccess = (userID) => ({type: UNFOLLOW , userID})
 export const setUsers = (users) => ({type: SET_USERS, users})
 export const setCurrentPage = (currentPage) => ({type: SET_CURRENT_PAGE, currentPage})
-export const setTotalUsersCount = (totalCount) => ({type:SET_TOTAL_USERS_COUNT, totalCount})
+export const setTotalItemsCount = (totalCount) => ({type:SET_TOTAL_ITEMS_COUNT, totalCount})
 export const setIsLoader = (toggleIsLoader) => ({type:TOGGLE_IS_LOADER, toggleIsLoader})
 export const setIsFetching = (toggleIsFetching) => ({type:TOGGLE_IS_FETCHING, toggleIsFetching})
 export const setFollowingInProgress = (toggleProgress, userId) => ({ type: TOGGLE_IS_FOLLOWING_PROGRESS, toggleProgress, userId})
 
-export const getUsers = (currentPage, pageSize) => {
+export const getUsers = (page, pageSize) => {
     return (dispatch) => {
         dispatch(setIsLoader(true))
         dispatch(setIsFetching(true))
-        usersAPI.getUsers(currentPage, pageSize)
+        dispatch(setCurrentPage(page))
+
+        usersAPI.getUsers(page, pageSize)
             .then(data => {
                 dispatch(setIsLoader(false))
                 dispatch(setIsFetching(false))
                 dispatch (setUsers(data.items))
-                dispatch (setTotalUsersCount(data.totalCount))
+                dispatch (setTotalItemsCount(data.totalCount))
             })
     }
 }

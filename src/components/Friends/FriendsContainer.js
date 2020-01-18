@@ -2,12 +2,13 @@ import React from 'react'
 
 import Friends from "./Friends";
 import {connect} from "react-redux";
+import {addNewFriendsMessage} from "../../redux/friendsReducer";
 
 const FriendsContainer = (props) => {
 
     return (
         <div>
-            <Friends friendList={props.friendList}/>
+            <Friends friendList={props.friendList} title={'title'}/>
         </div>
     )
 }
@@ -18,8 +19,12 @@ let mapStateToProps = (state) => {
     }
 }
 
-let mapDispatchToProps = () => {
-
+let mapDispatchToProps = (dispatch) => {
+    return {
+        sendFriendsMessage: (newFriendsMessage) => {
+            dispatch(addNewFriendsMessage(newFriendsMessage))
+        }
+    }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps) (FriendsContainer);

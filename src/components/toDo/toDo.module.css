@@ -1,0 +1,7 @@
+.textBlock {
+    display: flex;
+}
+
+.number {
+    margin-right: 5px;
+}

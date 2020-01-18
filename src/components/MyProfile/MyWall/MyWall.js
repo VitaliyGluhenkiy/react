@@ -1,30 +1,21 @@
 import React from 'react'
 import MyWallItem from "./MyWallItem/MyWallItem";
 import {addPostWallAC, updateWallTextAC} from "../../../redux/myWallReducer";
+import {Field, reduxForm} from "redux-form";
+import {maxLengthCreator, required} from "../../../helpers/validators/validators";
+import {Textarea} from "../../../common/FormsControls/FormsControls";
+import MyWallFormRedux from "./MyWallForm";
 
 const MyWall = (props) => {
 
-    let newPostWall = React.createRef();
-
     let myWallPage = props.myWallPage.map( m => <MyWallItem name={m.name} message={m.message}/>)
 
-    let onAddPostWall = () => {
-        props.addPostWall()
-
-    }
-
-    let onWallChange = () => {
-        let text = newPostWall.current.value;
-        props.updateWallText(text)
+    const newMessageWall= (value) => {
+        props.addPostWall(value.message)
     }
     return (
         <div>
-            <div>
-                <textarea onChange={onWallChange} ref={newPostWall} value={props.newPostWall} />
-            </div>
-            <div>
-                <button onClick={onAddPostWall}>Отправить</button>
-            </div>
+            <MyWallFormRedux onSubmit={newMessageWall}/>
             <div>
                 {myWallPage}
             </div>
@@ -32,5 +23,6 @@ const MyWall = (props) => {
         </div>
     )
 }
+
 
 export default MyWall;

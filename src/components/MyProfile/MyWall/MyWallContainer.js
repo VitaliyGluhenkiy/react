@@ -17,8 +17,8 @@ let mapDispatchToProps = (dispatch) => {
             dispatch(updateWallTextAC(text))
 
         },
-        addPostWall: () => {
-            dispatch(addPostWallAC())
+        addPostWall: (message) => {
+            dispatch(addPostWallAC(message))
 
         }
     }
