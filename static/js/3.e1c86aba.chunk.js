@@ -1,0 +1,2 @@
+(this["webpackJsonpnew-app"]=this["webpackJsonpnew-app"]||[]).push([[3],{256:function(t,n,e){t.exports={buttons:"Content_buttons__3pZSb",buttonCancel:"Content_buttonCancel__3aTMw",buttonAccept:"Content_buttonAccept__1p0nN"}},257:function(t,n,e){"use strict";e.r(n);e(42),e(0);var o=e(122),c=e(8),u=e(114);e(256);n.default=Object(c.b)((function(t){return{text:t.contentPage.text}}),(function(t){return{sendContextText:function(n){t(Object(u.b)(n))}}}))(o.a)}}]);
+//# sourceMappingURL=3.e1c86aba.chunk.js.map

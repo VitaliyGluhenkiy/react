@@ -1,0 +1,1 @@
+{"version":3,"sources":["Content.module.css"],"names":[],"mappings":"AAAA,wBACI,YACJ,CAEA,qDACI,wBACJ,CAEA,qDACI,sBACJ","file":"3.3093e663.chunk.css","sourcesContent":[".buttons {\r\n    display: flex;\r\n}\r\n\r\n.buttons .buttonCancel {\r\n    background-color: darkred;\r\n}\r\n\r\n.buttons .buttonAccept {\r\n    background-color: green;\r\n}"]}
